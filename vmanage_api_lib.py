@@ -35,13 +35,7 @@ class rest_api_lib:
     def get_token(self):
         get_token_api = "/dataservice/client/token"
 
-        url = (
-            "https://"
-            + str(self.vmanage_ip)
-            + ":"
-            + str(self.vmanage_port)
-            + get_token_api
-        )
+        url = "https://" + str(self.vmanage_ip) + ":" + str(self.vmanage_port) + get_token_api
 
         response = self.session[self.vmanage_ip].get(url, verify=False)
 
@@ -52,14 +46,7 @@ class rest_api_lib:
 
     def get_request(self, mount_point):
         """GET request"""
-        url = (
-            "https://"
-            + str(self.vmanage_ip)
-            + ":"
-            + str(self.vmanage_port)
-            + "/dataservice/"
-            + mount_point
-        )
+        url = "https://" + str(self.vmanage_ip) + ":" + str(self.vmanage_port) + "/dataservice/" + mount_point
 
         response = self.session[self.vmanage_ip].get(url, verify=False)
         data = response.content
@@ -67,20 +54,13 @@ class rest_api_lib:
 
     def post_request(self, mount_point, payload):
         """POST request"""
-        url = (
-            "https://"
-            + str(self.vmanage_ip)
-            + ":"
-            + str(self.vmanage_port)
-            + "/dataservice/"
-            + mount_point
-        )
+        url = "https://" + str(self.vmanage_ip) + ":" + str(self.vmanage_port) + "/dataservice/" + mount_point
 
         token = {"X-XSRF-TOKEN": self.get_token()}
         headers = {"Content-Type": "application/json"}
         headers_with_token = {**headers, **token}
 
-        print('\n URL: ',url, '\n Payload: ', payload, '\n Headers: ',headers_with_token)
+        print("\n URL: ", url, "\n Payload: ", payload, "\n Headers: ", headers_with_token)
 
         return self.session[self.vmanage_ip].post(
             url=url, data=json.dumps(payload), headers=headers_with_token, verify=False
@@ -90,9 +70,11 @@ class rest_api_lib:
 
         response = json.loads(self.get_request("device/action/software"))
         print("------------- Software available on vManage -------------------")
-        print(f'versionType  versionName  versionURL                               platformFamily           availableFiles')
+        print(
+            f"versionType  versionName  versionURL                               platformFamily           availableFiles"
+        )
         for item in response["data"]:
-            if remote_only and item['versionType'] == 'remote':
+            if remote_only and item["versionType"] == "remote":
                 print(
                     f"{item['versionType']}     {item['versionName']}    {item['versionURL']} {item['platformFamily']} {item['availableFiles']}"
                 )
@@ -102,5 +84,3 @@ class rest_api_lib:
                 )
         if print_all:
             print(json.dumps(response["data"], indent=4, sort_keys=True))
-
-
