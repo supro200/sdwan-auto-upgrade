@@ -62,10 +62,44 @@ isr4331_payload2 = {
     "deviceType": "vedge",
 }
 
+isr4331_file_name3 = "isr4300-universalk9.17.03.01a.SPA.bin"
+isr4331_version3 = "17.3.1"
+isr4331_payload3 = {
+    "action": "install",
+    "input": {
+        "vEdgeVPN": "0",
+        "vSmartVPN": 0,
+        "data": [{"family": "isr4300", "version": isr4331_version3}],
+        "versionType": "remote",
+        "reboot": True,
+        "sync": True,
+    },
+    "devices": [{"deviceIP": "3.1.1.133", "deviceId": "ISR4331/K9-FDO230904G3"}],
+    "deviceType": "vedge",
+}
+
+# ---------- test ISR 1111 file -------------
+isr1111_file_name1 = "c1100-universalk9.17.02.02.SPA.bin"
+isr1111_version1 = "17.2.2"
+isr1111_payload1 = {
+    "action": "install",
+    "input": {
+        "vEdgeVPN": "0",
+        "vSmartVPN": 0,
+        "data": [{"family": "c1100", "version": isr1111_version1}],
+        "versionType": "remote",
+        "reboot": False,
+        "sync": True,
+    },
+    "devices": [{"deviceIP": "3.1.1.248", "deviceId": "C1111-8PLTELA-FGL231612VJ"}],
+    "deviceType": "vedge",
+}
+
 # ----------- software to test -----------------
-file_name = asr_1001x_file_name1
-software_version = asr_1001x_version1
-software_install_payload = asr_1001x_payload1
+file_name = isr4331_file_name3
+software_version = isr4331_version3
+software_install_payload = isr4331_payload3
+platform_family = "isr4300"
 
 # -------------------------- Build ssh tunnel via jumphost --------------------------
 
@@ -96,10 +130,11 @@ azure_blob_sas_token_bin = (
         generate_sas_token(AZURE_STORAGE_ACCOUNT, azure_blob_container, file_name=file_name) + "&ext=.bin")
 print(f"\nGenerated Azure SAS token: {azure_blob_sas_token_bin}")
 
-print(f"-------------------------- Generate remote URL ---------------------------")
-test_payload = {"controllerVersionName": "20.1", "versionName": software_version, "versionURL": azure_blob_sas_token_bin}
-print(f"\nSending POST request with payload: {test_payload}")
-response = sdwan_controller.post_request("device/action/software", test_payload)
+print(f"-------------------------- Generating remote URL ---------------------------")
+
+add_software_payload = {"platformFamily": platform_family, "controllerVersionName": "20.1", "versionName": software_version, "versionURL": azure_blob_sas_token_bin}
+print(f"\nSending POST request with payload: {add_software_payload}")
+response = sdwan_controller.post_request("device/action/software", add_software_payload)
 print(f"\nGot response: {response.status_code}, {response.reason}")
 if response.status_code != 200:
     ssh_tunnel.stop()
@@ -111,6 +146,6 @@ sdwan_controller.print_software(remote_only=True, print_all=False)
 print(f"-------------------------- Installing software to device ---------------------------")
 print(f"\nSending POST request with payload: {software_install_payload}")
 response = sdwan_controller.post_request("device/action/install", software_install_payload)
-print(f"\nGot response: {response.reason}")
+print(f"\nGot response: {response.status_code}, {response.reason}")
 
 ssh_tunnel.stop()
