@@ -57,7 +57,7 @@ isr4331_payload3 = {
         "vSmartVPN": 0,
         "data": [{"family": "isr4300", "version": isr4331_version3}],
         "versionType": "remote",
-        "reboot": True,
+        "reboot": False,
         "sync": True,
     },
     "devices": [{"deviceIP": "3.1.1.133", "deviceId": "ISR4331/K9-FDO230904G3"}],

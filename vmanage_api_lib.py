@@ -1,3 +1,5 @@
+import logging
+
 import requests
 import json
 import sys
@@ -48,9 +50,7 @@ class rest_api_lib:
         """GET request"""
         url = "https://" + str(self.vmanage_ip) + ":" + str(self.vmanage_port) + "/dataservice/" + mount_point
 
-        response = self.session[self.vmanage_ip].get(url, verify=False)
-        data = response.content
-        return data
+        return self.session[self.vmanage_ip].get(url, verify=False)
 
     def post_request(self, mount_point, payload):
         """POST request"""
@@ -60,7 +60,7 @@ class rest_api_lib:
         headers = {"Content-Type": "application/json"}
         headers_with_token = {**headers, **token}
 
-        print("\n URL: ", url, "\n Payload: ", payload, "\n Headers: ", headers_with_token)
+        logging.info(f"\n{url}:  url, \nPayload: {payload}, \nHeaders: {headers_with_token}")
 
         return self.session[self.vmanage_ip].post(
             url=url, data=json.dumps(payload), headers=headers_with_token, verify=False
@@ -68,7 +68,7 @@ class rest_api_lib:
 
     def print_software(self, remote_only=True, print_all=False):
 
-        response = json.loads(self.get_request("device/action/software"))
+        response = json.loads(self.get_request("device/action/software").content)
         print("------------- Software available on vManage -------------------")
         print(
             f"versionType  versionName  versionURL                               platformFamily           availableFiles"
@@ -84,3 +84,4 @@ class rest_api_lib:
                 )
         if print_all:
             print(json.dumps(response["data"], indent=4, sort_keys=True))
+

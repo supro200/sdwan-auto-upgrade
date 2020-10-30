@@ -1,6 +1,13 @@
 # https://pypi.org/project/azure-storage-blob/
-# Install manually - pip install azure-storage-blob
+# Install -  pip install azure-storage-blob
+import json
+import logging
 import os
+from time import sleep
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+logging.getLogger().setLevel(logging.INFO)
+
 from sshtunnel import SSHTunnelForwarder  # ssh tunnel to jump host
 from vmanage_api_lib import rest_api_lib
 from azure_api_lib import generate_sas_token
@@ -13,10 +20,10 @@ SSH_PASSWORD = os.environ["SSH_PASSWORD"]
 azure_blob_container = "images"
 
 # ----------- software to test - see test_software.py for definitions -----------------
-file_name = isr1111_file_name2
-software_version = isr1111_version2
-software_install_payload = isr1111_payload2
-platform_family = "c1100"
+file_name = isr4331_file_name2
+software_version = isr4331_version2
+software_install_payload = isr4331_payload2
+platform_family = "isr4300"
 
 # -------------------------- Build ssh tunnel via jumphost --------------------------
 
@@ -56,9 +63,9 @@ add_software_payload = {
     "versionName": software_version,
     "versionURL": azure_blob_sas_token_bin,
 }
-print(f"\nSending POST request with payload: {add_software_payload}")
+logging.info(f"\nSending POST request with payload: {add_software_payload}")
 response = sdwan_controller.post_request("device/action/software", add_software_payload)
-print(f"\nGot response: {response.status_code}, {response.reason}")
+logging.info(f"\nGot response: {response.status_code}, {response.reason}")
 if response.status_code != 200:
     ssh_tunnel.stop()
     print(f">>>> Could not generate remote URL. Exiting....")
@@ -67,8 +74,30 @@ if response.status_code != 200:
 sdwan_controller.print_software(remote_only=True, print_all=False)
 
 print(f"-------------------------- Installing software to device ---------------------------")
-print(f"\nSending POST request with payload: {software_install_payload}")
-response = sdwan_controller.post_request("device/action/install", software_install_payload)
-print(f"\nGot response: {response.status_code}, {response.reason}")
 
+logging.info(f"\nSending POST request with payload: {software_install_payload}")
+response = sdwan_controller.post_request("device/action/install", software_install_payload)
+logging.info(f"\nGot response: {response.status_code}, {response.reason}, {response.text}")
+
+if response.status_code == 200:
+    job_id = json.loads(response.text)["id"]
+    print(f"Submitted upgrade request, job ID: {job_id}")
+else:
+    print(f">>>> Could not start software upgrade. Exiting....")
+    ssh_tunnel.stop()
+    exit(0)
+
+print(f"-------------------------- Monitoring job status ---------------------------")
+
+response = sdwan_controller.get_request(f"device/action/status/{job_id}")
+logging.info(f"\nGot response: {response.status_code}, {response.reason}, {response.text}")
+job_status = json.loads(response.content)["data"][0]["status"]
+
+while job_status not in ["Failure", "Success"]:
+    response = sdwan_controller.get_request(f"device/action/status/{job_id}")
+    job_status = json.loads(response.content)["data"][0]["status"]
+    print(f"Current job status: {job_status}")
+    sleep(3)
+
+print(f'Software upgrade result: {job_status} \nDetails: {json.dumps(json.loads(response.content)["data"], indent=4, sort_keys=True)}')
 ssh_tunnel.stop()
