@@ -2,7 +2,16 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-green.svg)](https://lbesson.mit-license.org/)
 
 # Cisco SDWAN auto-upgrade
-## Introduction
+
+- [Cisco SDWAN auto-upgrade](#cisco-sdwan-auto-upgrade)
+    + [Introduction](#introduction)
+    + [Installation](#installation)
+    + [Azure Shared Access Signature](#azure-shared-access-signature)
+    + [Solution components and steps](#solution-components-and-steps)
+    + [Costs](#costs)
+    + [Caveats and limitations](#caveats-and-limitations)
+    
+### Introduction
 
 This tool demonstrates the approach automated upgrades of edge devices in a Cisco SD-WAN environment to simplify and streamline the software rollout and upgrade process.
 
@@ -20,7 +29,7 @@ This approach has the following benefits:
 
 This tool is not a complete upgrade solution, but rather a concept which can be used in conjunction with your automated pipelines.
 
-## Installation
+### Installation
 
 It is recommended to build a Python 3 virtual environment. 
 Details on how to set one up can be found [here](https://docs.python.org/3/library/venv.html). 
@@ -87,7 +96,7 @@ The diagram shows the components of this solution and the required steps describ
 9. The script polls vManage using Job ID 
 
 
-##Costs
+### Costs
 
 Public cloud infrastructure is not free, so it's important to consider possible costs.
 
@@ -112,7 +121,7 @@ If the image size is 700MB and the number of sites is 50, the cost of upgrade wo
 There are other costs like read access, but they are counted per 10,000 and cost about 0.07, so it can be safely excluded from the calculations.
 
 
-###Caveats and limitations
+### Caveats and limitations
 
 This approach was tested on vManage version 20.1 and Cisco IOS-XE devices version 17.2
 
@@ -124,8 +133,8 @@ As a workaround an additional key-value pair is added which seems to be ignored 
 
 Correct Azure SAS URL:
 
-http://<account-name>.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA.bin?se=2020-10-28T03%3A42%3A32Z&sp=rt&sv=2019-12-12&sr=b&sig=TCpnfN1AKghI9H9tpt6EkUBfMDPgBX3wzobG9jY%3D
+http://account-name.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA.bin?se=2020-10-28T03%3A42%3A32Z&sp=rt&sv=2019-12-12&sr=b&sig=TCpnfN1AKghI9H9tpt6EkUBfMDPgBX3wzobG9jY%3D
 
 Modified:
 
-http://<account-name>.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA.bin?se=2020-10-28T03%3A42%3A32Z&sp=rt&sv=2019-12-12&sr=b&sig=TCpnfN1AKgz9H9tpt6EkUBfMDPgBX3wzobG9jY%3D&ext=.bin
+http://account-name.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA.bin?se=2020-10-28T03%3A42%3A32Z&sp=rt&sv=2019-12-12&sr=b&sig=TCpnfN1AKgz9H9tpt6EkUBfMDPgBX3wzobG9jY%3D&ext=.bin
