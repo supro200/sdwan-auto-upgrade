@@ -13,7 +13,7 @@
     
 ### Introduction
 
-This tool demonstrates the approach automated upgrades of edge devices in a Cisco SD-WAN environment to simplify and streamline the software rollout and upgrade process.
+This tool demonstrates the approach to automatically upgrade Cisco edge devices in a Cisco SD-WAN environment to simplify and streamline the software rollout and upgrade process.
 
 It uses Public Cloud infrastructure to store software images and manage access to them using API.
 
@@ -63,11 +63,11 @@ Most of public cloud providers have this feature, for example, in AWS and GCP it
 https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-urls.html
 https://cloud.google.com/storage/docs/access-control/signed-urls
 
-This particular script uses Azure blob storage and it's feature called shared access signature (SAS):
+This particular script uses Azure blob storage and its feature called shared access signature (SAS):
 
 https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview
 
-A shared access signature (SAS) provides secure delegated access to resources in your storage account without compromising the security of your data. With a SAS, you have granular control over how a client can access your data. You can control what resources the client may access, what permissions they have on those resources, and how long the SAS is valid, among other parameters.
+_A shared access signature (SAS) provides secure delegated access to resources in your storage account without compromising the security of your data. With a SAS, you have granular control over how a client can access your data. You can control what resources the client may access, what permissions they have on those resources, and how long the SAS is valid, among other parameters._
 
 The SAS can specify start and expiry time, allowed source IP addresses, as well as a key to generate unique signatures:
 ![Azure SAS](img/azure_sas_generate.png)
@@ -85,10 +85,10 @@ The diagram shows the components of this solution and the required steps describ
 
 ![diagram](img/cisco-sdwan-auto-upgrade-diagram.jpg)
 1. The script makes API call to Azure, specifying target file and the time limit when this file should be available.
-2. The API endpoint returns SAS URL which includes unique signature, for example: http://<account-name>.blob.core.windows.net/images/isr4300-universalk9.17.02.02.SPA.bin?se=2020-10-28T03%3A48%3A01Z&sp=rt&sv=2019-12-12&sr=b&sig=BIkMvzGhUwKo0J7ASabsfdgsdfDTRSWEljnFkpjeowE%3D
-3. The script makes API call to vManage to add software with type=remote and URL=SAS
+2. The API endpoint returns SAS URL which includes unique signature, for example: _http://account-name.blob.core.windows.net/images/isr4300-universalk9.17.02.02.SPA.bin?se=2020-10-28T03%3A48%3A01Z&sp=rt&sv=2019-12-12&sr=b&sig=BIkMvzGhUwKo0J7ASabsfdgsdfDTRSWEljnFkpjeowE%3D_
+3. The script makes API call to vManage to add software with type=remote and URL=SAS which is generated in previos step
 4. The script makes another API call to vManage to initiate the upgrade process with the parameters of Software Version and target device (Device ID/Serial and System IP)
-5. vManage returns Job ID to the automated tool which can poll vManage for the Job status.
+5. vManage returns Job ID which is used to poll vManage for the upgrade process status
 6. vManage makes netconf RPC call to the router instructing it to download image via HTTP using the SAS URL, install it, and optionally, activate the new image.
 7. The router downloads the image from Azure using it's transport Internet connection
 ![vManage Screenshot](img/vmanage_screenshot.png)
