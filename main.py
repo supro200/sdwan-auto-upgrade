@@ -12,7 +12,7 @@ from sshtunnel import SSHTunnelForwarder  # ssh tunnel to jump host
 from vmanage_api_lib import rest_api_lib
 from azure_api_lib import generate_sas_token
 from constants import JUMPHOST, VMANAGE, AZURE_STORAGE_ACCOUNT
-from test_software import *
+from test_devices import *
 
 SSH_USERNAME = os.environ["SSH_USERNAME"]
 SSH_PASSWORD = os.environ["SSH_PASSWORD"]

@@ -11,7 +11,7 @@ asr_1001x_payload1 = {
         "reboot": False,
         "sync": True,
     },
-    "devices": [{"deviceIP": "3.1.1.250", "deviceId": "ASR1001-X-JAE2310048V"}],
+    "devices": [{"deviceIP": "13.1.11.250", "deviceId": "ASR1001-X-JAE121121212"}],
     "deviceType": "vedge",
 }
 
@@ -28,7 +28,7 @@ isr4331_payload1 = {
         "reboot": False,
         "sync": True,
     },
-    "devices": [{"deviceIP": "3.1.1.133", "deviceId": "ISR4331/K9-FDO230904G3"}],
+    "devices": [{"deviceIP": "13.1.11.133", "deviceId": "ISR4331/K9-FDO678542356"}],
     "deviceType": "vedge",
 }
 
@@ -44,7 +44,7 @@ isr4331_payload2 = {
         "reboot": False,
         "sync": True,
     },
-    "devices": [{"deviceIP": "3.1.1.133", "deviceId": "ISR4331/K9-FDO230904G3"}],
+    "devices": [{"deviceIP": "13.1.11.133", "deviceId": "ISR4331/K9-FDO678542356"}],
     "deviceType": "vedge",
 }
 
@@ -60,7 +60,7 @@ isr4331_payload3 = {
         "reboot": False,
         "sync": True,
     },
-    "devices": [{"deviceIP": "3.1.1.133", "deviceId": "ISR4331/K9-FDO230904G3"}],
+    "devices": [{"deviceIP": "13.1.11.133", "deviceId": "ISR4331/K9-FDO678542356"}],
     "deviceType": "vedge",
 }
 
@@ -77,7 +77,7 @@ isr1111_payload1 = {
         "reboot": False,
         "sync": True,
     },
-    "devices": [{"deviceIP": "3.1.1.248", "deviceId": "C1111-8PLTELA-FGL231612VJ"}],
+    "devices": [{"deviceIP": "13.1.11.248", "deviceId": "C1111-8PLTELA-4567845678"}],
     "deviceType": "vedge",
 }
 
@@ -93,6 +93,6 @@ isr1111_payload2 = {
         "reboot": True,
         "sync": True,
     },
-    "devices": [{"deviceIP": "3.1.1.248", "deviceId": "C1111-8PLTELA-FGL231612VJ"}],
+    "devices": [{"deviceIP": "13.1.11.248", "deviceId": "C1111-8PLTELA-4567845678"}],
     "deviceType": "vedge",
 }
