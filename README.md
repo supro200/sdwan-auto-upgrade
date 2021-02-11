@@ -49,10 +49,10 @@ pip install -r requirements.txt
 ```
 6. Change constants.py and test_software.py
 
-Make sure you have environmental variables: *SSH_USERNAME* and *SSH_PASSWORD*
+If you connect to vManage using intermediate jump host (bastion host), make sure you have environmental variables: *SSH_USERNAME* and *SSH_PASSWORD*
 
 Note the tool uses *test_devices.py* to get the software name and target devices.
-It it supposed this kind of data is provided by your automated tools.
+It it supposed this kind of data is provided by your automation tools.
 
 ### Azure Shared Access Signature
 
