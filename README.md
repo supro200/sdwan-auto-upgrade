@@ -49,7 +49,7 @@ pip install -r requirements.txt
 ```
 6. Change constants.py and test_software.py
 
-If you connect to vManage using intermediate jump host (bastion host), make sure you have environmental variables: *SSH_USERNAME* and *SSH_PASSWORD*
+Make sure you have environmental variables: *AZURE_PRIMARY_KEY* and if you connect to vManage using intermediate jump host (bastion host) set env.vars *SSH_USERNAME* and *SSH_PASSWORD*
 
 Note the tool uses *test_devices.py* to get the software name and target devices.
 It it supposed this kind of data is provided by your automation tools.
@@ -138,3 +138,5 @@ http://account-name.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA
 Modified:
 
 http://account-name.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA.bin?se=2020-10-28T03%3A42%3A32Z&sp=rt&sv=2019-12-12&sr=b&sig=TCpnfN1AKgz9H9tpt6EkUBfMDPgBX3wzobG9jY%3D&ext=.bin
+
+If you have any questions, please contact me at supro200@gmail.com
