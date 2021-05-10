@@ -27,8 +27,6 @@ This approach has the following benefits:
 * Images can be hosted in different regions, closer to endpoints, which would benefit customers who have global presence
 * Images can automatically uploaded on the devices out of business hours reducing engineers' after hours work
 
-This tool is not a complete upgrade solution, but rather a module which can be used in conjunction with your automated pipelines.
-
 ### Installation
 
 It is recommended to build a Python 3 virtual environment. 
@@ -138,5 +136,10 @@ http://account-name.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA
 Modified:
 
 http://account-name.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA.bin?se=2020-10-28T03%3A42%3A32Z&sp=rt&sv=2019-12-12&sr=b&sig=TCpnfN1AKgz9H9tpt6EkUBfMDPgBX3wzobG9jY%3D&ext=.bin
+
+
+This tool is not a complete upgrade solution, but rather a module which can be used in conjunction with your automated pipelines, for example:
+
+
 
 If you have any questions, please contact me at supro200@gmail.com
