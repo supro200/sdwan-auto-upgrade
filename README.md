@@ -140,6 +140,6 @@ http://account-name.blob.core.windows.net/images/c1100-universalk9.17.03.01a.SPA
 
 This tool is not a complete upgrade solution, but rather a module which can be used in conjunction with your automated pipelines, for example:
 
-
+![diagram](img/auto-upgrade-integration-sample.jpg)
 
 If you have any questions, please contact me at supro200@gmail.com
