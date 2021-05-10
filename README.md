@@ -27,7 +27,7 @@ This approach has the following benefits:
 * Images can be hosted in different regions, closer to endpoints, which would benefit customers who have global presence
 * Images can automatically uploaded on the devices out of business hours reducing engineers' after hours work
 
-This tool is not a complete upgrade solution, but rather a concept which can be used in conjunction with your automated pipelines.
+This tool is not a complete upgrade solution, but rather a module which can be used in conjunction with your automated pipelines.
 
 ### Installation
 
@@ -43,7 +43,7 @@ If you use a Windows PC, follow these steps:
 ```
 git clone https://github.com/supro200/sdwan-auto-upgrade.git
 python -m venv netsql
-cd netsql
+cd sdwan-auto-upgrade
 Scripts\activate.bat
 pip install -r requirements.txt
 ```
